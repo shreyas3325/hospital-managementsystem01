@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Book Appointment</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f4f4f4; padding: 20px; }
+    .container {
+      background: white; padding: 25px; max-width: 500px; margin: 0 auto;
+      border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    input, select, button {
+      width: 100%; padding: 10px; margin: 10px 0;
+      border: 1px solid #ccc; border-radius: 5px;
+    }
+    button {
+      background: #28a745; color: white; font-weight: bold; border: none; cursor: pointer;
+    }
+    button:hover { background: #218838; }
+    .msg { margin-top: 15px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Book Appointment</h2>
+
+    <form id="bookForm">
+      <input type="text" id="name" placeholder="Full Name" required />
+      <input type="text" id="phone" placeholder="Phone Number" required />
+      <input type="text" id="doctor" placeholder="Doctor Name" required />
+      <input type="date" id="date" required />
+
+      <!-- Predefined Time Slots -->
+      <select id="time" required>
+        <option value="">Select Time Slot</option>
+        <option value="09:00 AM">09:00 AM</option>
+        <option value="10:00 AM">10:00 AM</option>
+        <option value="11:00 AM">11:00 AM</option>
+        <option value="12:00 PM">12:00 PM</option>
+        <option value="02:00 PM">02:00 PM</option>
+        <option value="03:00 PM">03:00 PM</option>
+      </select>
+
+      <!-- Department Dropdown -->
+      <select id="department" required>
+        <option value="">Select Department</option>
+        <option value="Cardiology">Cardiology</option>
+        <option value="Neurology">Neurology</option>
+        <option value="Orthopedics">Orthopedics</option>
+        <option value="Dermatology">Dermatology</option>
+        <option value="Pediatrics">Pediatrics</option>
+      </select>
+
+      <button type="submit">Book Appointment</button>
+    </form>
+
+    <p class="msg" id="msg"></p>
+  </div>
+
+  <script>
+    document.getElementById("bookForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById("name").value.trim(),
+        phone: document.getElementById("phone").value.trim(),
+        doctor: document.getElementById("doctor").value.trim(),
+        date: document.getElementById("date").value,
+        time: document.getElementById("time").value,
+        department: document.getElementById("department").value,
+      };
+
+      try {
+        const res = await fetch("/api/book", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+
+        const result = await res.json();
+        document.getElementById("msg").textContent = result.message;
+        document.getElementById("msg").style.color = result.success ? "green" : "red";
+
+        if (result.success) e.target.reset();
+      } catch (err) {
+        document.getElementById("msg").textContent = "❌ Network error!";
+        document.getElementById("msg").style.color = "red";
+      }
+    });
+  </script>
+</body>
+</html>

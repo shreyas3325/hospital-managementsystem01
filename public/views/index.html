@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hospital Dashboard</title>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+    /* === Base Styles === */
+    body {
+      font-family: "Poppins", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top left, #0d1117, #161b22, #0d1117);
+      color: #e6edf3;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* === Animated background glow === */
+    body::before {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(88,166,255,0.3), transparent 70%);
+      top: 10%;
+      left: 10%;
+      animation: moveGlow 8s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+
+    body::after {
+      content: "";
+      position: absolute;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(35,134,54,0.25), transparent 70%);
+      bottom: 10%;
+      right: 10%;
+      animation: moveGlow 10s ease-in-out infinite alternate;
+      z-index: 0;
+    }
+
+    @keyframes moveGlow {
+      from { transform: translate(0, 0); }
+      to { transform: translate(30px, -40px); }
+    }
+
+    /* === Heading === */
+    h1 {
+      text-align: center;
+      margin-bottom: 60px;
+      color: #58a6ff;
+      text-shadow: 0 0 15px rgba(88, 166, 255, 0.6);
+      letter-spacing: 1px;
+      z-index: 2;
+      position: relative;
+      font-size: 2.2rem;
+    }
+
+    /* === Dashboard Grid === */
+    .dashboard {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 30px;
+      width: 90%;
+      max-width: 1000px;
+      z-index: 2;
+      position: relative;
+      justify-content: center;
+      align-items: center;
+    }
+
+    /* === Card Style === */
+    .card {
+      background: rgba(22, 27, 34, 0.85);
+      border: 1px solid rgba(88, 166, 255, 0.2);
+      border-radius: 18px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+      padding: 35px 25px;
+      text-align: center;
+      cursor: pointer;
+      font-weight: 600;
+      color: #c9d1d9;
+      transition: all 0.35s ease;
+      backdrop-filter: blur(8px);
+      transform: translateY(0);
+    }
+
+    /* === Card Hover Effects === */
+    .card:hover {
+      transform: translateY(-10px) scale(1.03);
+      box-shadow: 0 0 25px rgba(88, 166, 255, 0.4),
+                  0 0 10px rgba(35, 134, 54, 0.3);
+      background: linear-gradient(145deg, #238636, #58a6ff);
+      color: #fff;
+    }
+
+    .card span {
+      font-size: 42px;
+      margin-bottom: 12px;
+      display: block;
+      filter: drop-shadow(0 0 5px rgba(255,255,255,0.2));
+    }
+
+    footer {
+      margin-top: 60px;
+      text-align: center;
+      color: #8b949e;
+      font-size: 14px;
+      z-index: 2;
+      position: relative;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.6rem;
+        margin-bottom: 35px;
+      }
+      .card {
+        padding: 25px 15px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <h1>🏥 Hospital Management Dashboard</h1>
+
+  <div class="dashboard">
+    <div class="card" onclick="navigate('/book-appointment')">
+      <span>📅</span>Book Appointment
+    </div>
+    <div class="card" onclick="navigate('/hospital')">
+      <span>🏨</span>Nearby Hospitals
+    </div>
+    <div class="card" onclick="navigate('/stores')">
+      <span>💊</span>Medical Stores
+    </div>
+    <div class="card" onclick="navigate('/organs')">
+      <span>🫀</span>Organ Donation
+    </div>
+    <div class="card" onclick="navigate('/blood')">
+      <span>🩸</span>Blood Bank
+    </div>
+    <div class="card" onclick="navigate('/cancel-appointment')">
+      <span>❌</span>Cancel Appointment
+    </div>
+    <div class="card" onclick="navigate('/doctors')">
+      <span>👨‍⚕️</span>Doctors
+    </div>
+  </div>
+
+  <footer>
+    © 2025 Hospital Management System. Designed with ❤️ for better care.
+  </footer>
+
+  <script>
+    function navigate(path) {
+      window.location.href = path;
+    }
+  </script>
+</body>
+</html>

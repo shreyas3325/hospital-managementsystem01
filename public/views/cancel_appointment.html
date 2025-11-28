@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Cancel Appointment</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: white;
+      padding: 25px;
+      border-radius: 10px;
+      width: 400px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+    h2 { color: #dc3545; margin-bottom: 20px; }
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      font-size: 1rem;
+    }
+    button {
+      background: #dc3545;
+      color: white;
+      font-weight: bold;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      width: 100%;
+    }
+    button:hover { background: #b02a37; }
+    .msg { margin-top: 15px; font-weight: bold; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Cancel Appointment</h2>
+    <form id="cancelForm">
+      <input type="text" id="phone" placeholder="Enter your phone number" required />
+      <button type="submit">Cancel Appointment</button>
+    </form>
+    <p class="msg" id="msg"></p>
+  </div>
+
+  <script>
+    document.getElementById("cancelForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const phone = document.getElementById("phone").value.trim();
+
+      if (!phone) {
+        document.getElementById("msg").textContent = "⚠️ Please enter a phone number.";
+        document.getElementById("msg").style.color = "red";
+        return;
+      }
+
+      try {
+        const res = await fetch("/api/cancel", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ phone }),
+        });
+
+        const result = await res.json();
+        document.getElementById("msg").textContent = result.message;
+        document.getElementById("msg").style.color = result.success ? "green" : "red";
+        if (result.success) e.target.reset();
+      } catch (err) {
+        document.getElementById("msg").textContent = "❌ Network error!";
+        document.getElementById("msg").style.color = "red";
+      }
+    });
+  </script>
+</body>
+</html>

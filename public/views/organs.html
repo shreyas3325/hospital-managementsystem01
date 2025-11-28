@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Available Organs</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  />
+  <style>
+    body {
+      background: linear-gradient(135deg, #dff9fb, #ffffff);
+      font-family: "Poppins", sans-serif;
+    }
+    .container {
+      margin-top: 50px;
+    }
+    .card {
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+    .table thead {
+      background-color: #0d6efd;
+      color: white;
+    }
+    .table tbody tr:hover {
+      background-color: #f2f2f2;
+      transition: 0.3s;
+    }
+    .header-title {
+      color: #0d6efd;
+      font-weight: bold;
+      text-align: center;
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2 class="header-title">🫀 Available Organs</h2>
+
+    <div class="card">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Organ Type</th>
+            <th>Blood Group</th>
+            <th>Availability</th>
+            <th>Hospital</th>
+            <th>Location</th>
+            <th>Contact</th>
+          </tr>
+        </thead>
+        <tbody id="organTable"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    async function loadOrgans() {
+      try {
+        const res = await fetch("/api/organs/available");
+        const data = await res.json();
+        const tbody = document.getElementById("organTable");
+
+        tbody.innerHTML = data.map(o => `
+          <tr>
+            <td>${o.organ_type}</td>
+            <td>${o.blood_group || '-'}</td>
+            <td>${o.availability}</td>
+            <td>${o.hospital_name}</td>
+            <td>${o.location}</td>
+            <td>${o.contact}</td>
+          </tr>
+        `).join("");
+      } catch (err) {
+        console.error("Error fetching organs:", err);
+      }
+    }
+
+    loadOrgans();
+  </script>
+</body>
+</html>

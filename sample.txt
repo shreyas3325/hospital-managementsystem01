@@ -1,0 +1,163 @@
+-- ------------------------------------------------------
+-- Database: hospital_db
+-- ------------------------------------------------------
+
+CREATE DATABASE IF NOT EXISTS hospital_db;
+USE hospital_db;
+
+-- ------------------------------------------------------
+-- Table: appointments
+-- ------------------------------------------------------
+CREATE TABLE `appointments` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) DEFAULT NULL,
+  `phone` VARCHAR(15) DEFAULT NULL,
+  `doctor` VARCHAR(100) DEFAULT NULL,
+  `date` DATE DEFAULT NULL,
+  `time` VARCHAR(50) DEFAULT NULL,
+  `department` VARCHAR(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `appointments` (`id`,`name`,`phone`,`doctor`,`date`,`time`,`department`) VALUES
+(3,'shreyas','7676310133','abdul','2025-10-28','09:00 AM','Cardiology'),
+(6,'shreyas','07676310133',NULL,'2025-10-28','10:00 AM','Orthopedics'),
+(7,'shreyas','7676310133',NULL,'2025-10-29','09:00 AM','Neurology'),
+(8,'shreyas','2564374125',NULL,'2025-10-30','10:00 AM','Neurology'),
+(9,'shreyas','07676310133',NULL,'2025-10-29','09:00 AM','Cardiology'),
+(10,'shreyas','07676310133',NULL,'2025-10-30','09:00 AM','Cardiology'),
+(11,'shreyas','7676310133',NULL,'2025-10-29','10:00 AM','Orthopedics');
+
+-- ------------------------------------------------------
+-- Table: blood
+-- ------------------------------------------------------
+CREATE TABLE `blood` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `blood_group` VARCHAR(10) DEFAULT NULL,
+  `location` VARCHAR(100) DEFAULT NULL,
+  `contact` VARCHAR(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- (No sample data)
+
+-- ------------------------------------------------------
+-- Table: blood_availability
+-- ------------------------------------------------------
+CREATE TABLE `blood_availability` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `blood_group` VARCHAR(5) NOT NULL,
+  `quantity` INT DEFAULT 0,
+  `hospital_name` VARCHAR(100) NOT NULL,
+  `location` VARCHAR(100) DEFAULT NULL,
+  `contact` VARCHAR(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `blood_availability` (`id`,`blood_group`,`quantity`,`hospital_name`,`location`,`contact`) VALUES
+(1,'A+',12,'City Hospital','Hyderabad','9876543210'),
+(2,'B+',8,'Care Multispeciality Hospital','Bangalore','9856231470'),
+(3,'O+',15,'Sunrise Blood Center','Chennai','9845123670'),
+(4,'AB+',6,'Apollo Hospital','Mumbai','9823476510'),
+(5,'A-',5,'Fortis Hospital','Delhi','9890765432'),
+(6,'O-',4,'Global Blood Bank','Pune','9765412389'),
+(7,'B-',3,'Red Cross Blood Center','Kolkata','9831024756'),
+(8,'AB-',2,'Lifeline Hospital','Ahmedabad','9726485190');
+
+-- ------------------------------------------------------
+-- Table: blood_donors
+-- ------------------------------------------------------
+CREATE TABLE `blood_donors` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  `blood_group` VARCHAR(5) NOT NULL,
+  `age` INT DEFAULT NULL,
+  `contact` VARCHAR(20) DEFAULT NULL,
+  `location` VARCHAR(100) DEFAULT NULL,
+  `donation_date` DATE DEFAULT (CURDATE()),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `blood_donors` (`id`,`name`,`blood_group`,`age`,`contact`,`location`,`donation_date`) VALUES
+(1,'shreyas','B-',21,'7676310133','atria institute of technology','2025-10-27'),
+(2,'umar','A-',56,'7676310133','atria institute of technology','2025-10-28');
+
+-- ------------------------------------------------------
+-- Table: doctors
+-- ------------------------------------------------------
+CREATE TABLE `doctors` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) DEFAULT NULL,
+  `specialization` VARCHAR(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- (No sample data)
+
+-- ------------------------------------------------------
+-- Table: hospitals
+-- ------------------------------------------------------
+CREATE TABLE `hospitals` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) DEFAULT NULL,
+  `location` VARCHAR(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- (No sample data)
+
+-- ------------------------------------------------------
+-- Table: organ_availability
+-- ------------------------------------------------------
+CREATE TABLE `organ_availability` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `organ_type` VARCHAR(50) NOT NULL,
+  `blood_group` VARCHAR(5) DEFAULT NULL,
+  `availability` INT DEFAULT 0,
+  `hospital_name` VARCHAR(100) DEFAULT NULL,
+  `location` VARCHAR(100) DEFAULT NULL,
+  `contact` VARCHAR(20) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+INSERT INTO `organ_availability` (`id`,`organ_type`,`blood_group`,`availability`,`hospital_name`,`location`,`contact`) VALUES
+(1,'Heart','O+',2,'Apollo Hospital','Mumbai','9823476510'),
+(2,'Kidney','A+',5,'City Hospital','Hyderabad','9876543210'),
+(3,'Liver','B+',3,'Fortis Hospital','Delhi','9890765432'),
+(4,'Lung','AB+',1,'Global Hospital','Chennai','9845123670'),
+(5,'Cornea','O-',4,'Lifeline Hospital','Ahmedabad','9726485190');
+
+-- ------------------------------------------------------
+-- Table: organs
+-- ------------------------------------------------------
+CREATE TABLE `organs` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `patient` VARCHAR(100) DEFAULT NULL,
+  `organ_needed` VARCHAR(100) DEFAULT NULL,
+  `blood_group` VARCHAR(10) DEFAULT NULL,
+  `contact` VARCHAR(50) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- (No sample data)
+
+-- ------------------------------------------------------
+-- Table: stores
+-- ------------------------------------------------------
+CREATE TABLE `stores` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) DEFAULT NULL,
+  `location` VARCHAR(100) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- (No sample data)
+INSERT INTO doctors (name, specialization)
+VALUES 
+("Dr. Rohan Kumar", "Cardiology"),
+("Dr. Sneha Patel", "Neurology"),
+("Dr. Arjun Varma", "Orthopedics"),
+("Dr. Mira Chawla", "Dermatology");
+
+INSERT INTO doctors (name, specialization)
+VALUES ("Dr. Kavya Rao", "Neurology");
